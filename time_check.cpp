@@ -2,10 +2,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <map>
-#include <random>
-#include <numeric>
-#include <time.h>
 #include <unordered_map>
 
 using namespace std;
@@ -33,8 +29,9 @@ unordered_map<int, pll> dfs(int v, int pr = -1) {
         unordered_map<int, pll> tmp = dfs(u, v);
 
         for (auto j : tmp) {
+            int g = __gcd(j.first, a[v]);
             for (auto k : know) {
-                ans = (ans + (__gcd((ll)k.first, (ll)j.first) * (((k.second.first) * j.second.second) + (((j.second.first + j.second.second) % MOD) * k.second.second) % MOD))) % MOD % MOD;
+                ans = (ans + (__gcd((ll)k.first, (ll)g) * (((k.second.first) * j.second.second) + (((j.second.first) % MOD) * k.second.second) % MOD))) % MOD % MOD;
             }
         }
 
@@ -43,6 +40,14 @@ unordered_map<int, pll> dfs(int v, int pr = -1) {
             know[__gcd(j.first, a[v])].second += j.second.second;
         }
     }
+
+    // if (v == 1) {
+    //     for (auto i : know) {
+    //         cout << i.first << ' ' << i.second.first << ' ' << i.second.second << endl;
+    //     }
+
+    //     cout << endl << ans << endl;
+    // }
 
     // if (v == 2) {
     //     cout << ans << endl;
