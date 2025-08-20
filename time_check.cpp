@@ -6,28 +6,56 @@
 #include <random>
 #include <numeric>
 #include <time.h>
+#include <unordered_map>
 
 using namespace std;
 
+using ll = long long;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+using pil = pair<int, ll>;
+using pli = pair<ll, int>;
+
 const int N = 1e5 + 1;
 const int K = 1e4;
+const ll MOD = 1e9 + 7;
 
 vector<int> g[N + 5];
 int a[N + 5];
-int rs = 1;
+ll ans = 0;
 
-set<int> dfs(int v, int pr = -1) {
-    set<int> know{a[v]};
+// {sum_of_length, cnt_length}
+unordered_map<int, pll> dfs(int v, int pr = -1) {
+    unordered_map<int, pll> know;
     for (auto u : g[v]) {
         if (u == pr) continue;
 
-        set<int> tmp = dfs(u, v);
+        unordered_map<int, pll> tmp = dfs(u, v);
         for (auto j : tmp) {
-            know.insert(__gcd(j, a[v]));
+            for (auto k : know) {
+                ans = (ans + (__gcd(k.first, j.first) * ((k.second.first) + (((j.second.first + j.second.second) % MOD) * k.second.second) % MOD))) % MOD % MOD;
+            }
+
+            know[__gcd(j.first, a[v])].first += (j.second.first + j.second.second);
+            know[__gcd(j.first, a[v])].second += j.second.second;
         }
     }
 
-    rs = max(rs, (int)know.size());
+    for (auto i : know) {
+        ans = (ans + (i.first * i.second.first) % MOD) % MOD;
+    }
+
+    know[a[v]].first++;
+    know[a[v]].second++;
+
+    // if (v == 2) {
+    //     for (auto i : know) {
+    //         cout << i.first << ' ' << i.second.first << ' ' << i.second.second << endl;
+    //     }
+    // }
+
+    // rs = max(rs, (int)know.size());
+
     return know;
 }
 
@@ -36,6 +64,7 @@ int main() {
     cout.tie(0);
     cin.tie(0);
 
+    /*
     mt19937 mt(time(NULL));
 
     double ans = 0;
@@ -68,6 +97,26 @@ int main() {
     }
 
     cout << endl;
+
+    cout << ans;
+    */
+
+    int n;
+    cin >> n;
+
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        int u, v;
+        cin >> u >> v;
+
+        g[u].push_back(v);
+        g[v].push_back(u);
+    }
+
+    dfs(1);
 
     cout << ans;
 }
