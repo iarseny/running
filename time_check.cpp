@@ -2,9 +2,10 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <set>
+#include <map>
 #include <random>
 #include <numeric>
+#include <time.h>
 
 using namespace std;
 
@@ -37,10 +38,9 @@ int main() {
 
     mt19937 mt(time(NULL));
 
-    int ans = 0;
+    double ans = 0;
 
     for (int i = 0; i < K; i++) {
-        cout << i << ' ' << ans << endl;
         vector<int> p(N - 1);
         for (int j = 0; j < N - 1; j++) {
             p[j] = ((mt() % (j + 1)) + 1);
@@ -64,7 +64,7 @@ int main() {
 
         dfs(1);
 
-        ans = max(ans, rs);
+        // ans = max(ans, rs);
     }
 
     cout << endl;
