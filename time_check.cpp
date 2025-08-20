@@ -33,7 +33,7 @@ unordered_map<int, pll> dfs(int v, int pr = -1) {
         unordered_map<int, pll> tmp = dfs(u, v);
         for (auto j : tmp) {
             for (auto k : know) {
-                // cout << v << endl;
+                cout << v << endl;
                 ans = (ans + (__gcd((ll)k.first, (ll)j.first) * (((k.second.first) * j.second.second) + (((j.second.first + j.second.second) % MOD) * k.second.second) % MOD))) % MOD % MOD;
             }
 
@@ -42,12 +42,12 @@ unordered_map<int, pll> dfs(int v, int pr = -1) {
         }
     }
 
-    if (v == 2) {
-        cout << ans << endl;
-        for (auto j : know) {
-            cout << j.first << ' ' << j.second.first << ' ' << j.second.second << endl;
-        }
-    }
+    // if (v == 2) {
+    //     cout << ans << endl;
+    //     for (auto j : know) {
+    //         cout << j.first << ' ' << j.second.first << ' ' << j.second.second << endl;
+    //     }
+    // }
 
     for (auto i : know) {
         ans = (ans + (i.first * i.second.first) % MOD) % MOD;
