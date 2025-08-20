@@ -31,12 +31,14 @@ unordered_map<int, pll> dfs(int v, int pr = -1) {
         if (u == pr) continue;
 
         unordered_map<int, pll> tmp = dfs(u, v);
+
         for (auto j : tmp) {
             for (auto k : know) {
-                cout << v << endl;
                 ans = (ans + (__gcd((ll)k.first, (ll)j.first) * (((k.second.first) * j.second.second) + (((j.second.first + j.second.second) % MOD) * k.second.second) % MOD))) % MOD % MOD;
             }
+        }
 
+        for (auto j : tmp) {
             know[__gcd(j.first, a[v])].first += (j.second.first + j.second.second);
             know[__gcd(j.first, a[v])].second += j.second.second;
         }
