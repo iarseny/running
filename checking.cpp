@@ -212,8 +212,12 @@ int main() {
 
     srand(time(NULL));
 
+    int tmp_cnt = 1;
+
     while (true) {
         int n = rand() % 15 + 3;
+
+        cout << tmp_cnt++ << endl;
 
         vector<ll> p(n);
         for (int i = 0; i < n; i++) {
