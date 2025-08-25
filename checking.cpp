@@ -213,16 +213,16 @@ int main() {
     srand(time(NULL));
 
     while (true) {
-        int n = rand() % 10 + 3;
+        int n = rand() % 15 + 3;
 
         vector<ll> p(n);
         for (int i = 0; i < n; i++) {
-            p[i] = rand() % 35 + 1;
+            p[i] = rand() % 55 + 1;
         }
 
         vector<ll> q(n);
         for (int i = 0; i < n; i++) {
-            q[i] = rand() % 35 + 1;
+            q[i] = rand() % 55 + 1;
         }
 
         // if (n % 2 != 0) continue;
